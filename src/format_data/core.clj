@@ -11,7 +11,7 @@
   (if (empty? s) false
     (not (re-seq #"[^\d,.'-]+" s))))
 
-(defn infere-string-type [s]
+(defn infer-string-type [s]
   (cond 
     (empty? s) :empty
     (not (numeric? s)) :string
@@ -19,9 +19,9 @@
     :else :long))
 
 (defn map-string-type [ss]
-  (map infere-string-type ss))
+  (map infer-string-type ss))
 
-(defn infere-type-candidates [sss]
+(defn infer-type-candidates [sss]
   (let [n (count (first sss))
         conj-types (fn [acc types] (map #(conj %1 %2) acc types))]
     (reduce conj-types 
@@ -30,4 +30,4 @@
 
 (defn decide-type [ss])
 
-(defn infere-cols-type [sss])
+(defn infer-cols-type [sss])
