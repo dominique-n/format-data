@@ -21,7 +21,12 @@
 (defn map-string-type [ss]
   (map infere-string-type ss))
 
-(defn infere-type-candidates [sss])
+(defn infere-type-candidates [sss]
+  (let [n (count (first sss))
+        conj-types (fn [acc types] (map #(conj %1 %2) acc types))]
+    (reduce conj-types 
+            (repeatedly n (fn [] #{}))
+            (map map-string-type sss) )))
 
 (defn decide-type [ss])
 

@@ -7,3 +7,6 @@
 (empty? " ")
 (doc empty?)
 (doc empty)
+(set)
+(doc set)
+(empty set)

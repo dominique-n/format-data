@@ -45,9 +45,9 @@
        (map-string-type ["1.0" "2" "1lo2l3" ""]) => (just [:double :long :string :empty])
        )
 
-(future-facts "About `infere-type-candidates"
+(facts "About `infere-type-candidates"
        (let [sss [["1.0" "2" "1lo2l3" ""]
-                  ["1.0" "2.0" "1.0" ""]]]
+                  ["1.0" "2.0" "1.0" " "]]]
          (infere-type-candidates sss)) => (just [#{:double} #{:double :long}
                                               #{:string :double} #{:empty}])
        )
