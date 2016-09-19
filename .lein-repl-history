@@ -10,3 +10,5 @@
 (set)
 (doc set)
 (empty set)
+(hash-map 0 1)
+(hash-map)

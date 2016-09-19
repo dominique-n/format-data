@@ -49,8 +49,8 @@
          )
 
   (facts "About `infer-type-candidates"
-         (infer-type-candidates sss)) => (just [#{:double} #{:double :long}
-                                                #{:string :double} #{:empty}])
+         (infer-type-candidates sss)) => (just [{:double 2} {:double 1 :long 1}
+                                                {:string 1 :double 1} {:empty 2}])
 
 
   (fact "`infer-type prefer String when String detected"

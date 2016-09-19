@@ -9,7 +9,7 @@
   <scm>
     <connection>scm:git:git://github.com/dominique-n/format-data.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/dominique-n/format-data.git</developerConnection>
-    <tag>720042a80fb7c59acc51e8ab7fbf6a38231ccf04
+    <tag>6194535182c00ed0476876473dd678026e8c4166
 </tag>
     <url>https://github.com/dominique-n/format-data</url>
   </scm>
@@ -62,12 +62,6 @@
       <groupId>midje</groupId>
       <artifactId>midje</artifactId>
       <version>1.7.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>lazy-files</groupId>
-      <artifactId>lazy-files</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

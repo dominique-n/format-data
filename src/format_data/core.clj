@@ -22,9 +22,11 @@
 
 (defn infer-type-candidates [sss]
   (let [n (count (first sss))
-        conj-types (fn [acc types] (map #(conj %1 %2) acc types))]
+        conj-types (fn [acc types] 
+                     (map #(assoc %1 %2 (inc (get %1 %2 0))) 
+                          acc types))]
     (reduce conj-types 
-            (repeatedly n (fn [] #{}))
+            (repeatedly n hash-map)
             (map map-string-type sss) )))
 
 (defn infer-type [tss]
@@ -35,4 +37,5 @@
     :else :string))
 
 (defn infer-cols-type [sss]
-  (map infer-type (infer-type-candidates sss)))
+  (map #(-> % keys set infer-type)
+       (infer-type-candidates sss)))
