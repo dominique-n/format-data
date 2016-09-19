@@ -31,8 +31,15 @@
          )
 
   (fact "`infer-string-type should infer non-emtpy strings"
-        (infer-string-type "1.0") => :double
         (infer-string-type "1") => :long
+        (infer-string-type "1-1-1") => :long
+        (infer-string-type "1.1.1") => :long
+        (infer-string-type "1-1.1") => :long
+        (infer-string-type "1,1,1") => :long
+        (infer-string-type "1.0") => :long
+        (infer-string-type "111-1111.0") => :double
+        (infer-string-type "111,1111.0") => :double
+        (infer-string-type "111'1111.0") => :double
         (infer-string-type "ab") => :string
         (infer-string-type "1ab") => :string
         (infer-string-type "a1b") => :string
