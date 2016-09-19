@@ -1,9 +1,14 @@
-(ns format-data.core)
+(ns format-data.core
+  (require [format-data.helpers :as hlp]
+           [lazy-files.core :refer [lazy-read lazy-write]]))
 
-;;; This is an incorrect implementation, such as might be written by
-;;; someone who was used to a Lisp in which an empty list is equal to
-;;; nil.
-(defn first-element [sequence default]
-  (if (nil? sequence)
-    default
-    (first sequence)))
+
+(defn get-string-type [s])
+
+(defn map-string-type [ss])
+
+(defn infere-type-candidates [sss])
+
+(defn decide-type [ss])
+
+(defn infere-cols-type [sss])
