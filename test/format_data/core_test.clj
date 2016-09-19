@@ -3,68 +3,74 @@
             [format-data.core :refer :all]))
 
 
-(facts "About `empty?"
-       (empty? "") => truthy
-       (empty? " ") => truthy
-       (empty? "1") => falsey
-       )
+(let [sss [["1.0" "2" "1lo2l3" ""]
+           ["1.0" "2.0" "1.0" " "]]]
 
-(facts "About `numeric?"
-       (numeric? "") => falsey
-       (numeric? " ") => falsey
-       (numeric? "1") => truthy
-       (numeric? "111,111") => truthy
-       (numeric? "111'111") => truthy
-       (numeric? "111-111") => truthy
-       (numeric? "$111'111") => falsey
-       (numeric? "111'111$") => falsey
-       (numeric? "1.2") => truthy
-       (numeric? "111,111.2") => truthy
-       (numeric? "111'111.2") => truthy
-       (numeric? "111-111.2") => truthy
-       (numeric? "$111,111.2") => falsey
-       (numeric? "$111,111.2$") => falsey
-       (numeric? "1.2a") => falsey
-       )
+  (facts "About `empty?"
+         (empty? "") => truthy
+         (empty? " ") => truthy
+         (empty? "1") => falsey
+         )
 
-(fact "`infer-string-type should infer non-emtpy strings"
-       (infer-string-type "1.0") => :double
-       (infer-string-type "1") => :long
-       (infer-string-type "ab") => :string
-       (infer-string-type "1ab") => :string
-       (infer-string-type "a1b") => :string
-       (infer-string-type "ab1") => :string
-       )
+  (facts "About `numeric?"
+         (numeric? "") => falsey
+         (numeric? " ") => falsey
+         (numeric? "1") => truthy
+         (numeric? "111,111") => truthy
+         (numeric? "111'111") => truthy
+         (numeric? "111-111") => truthy
+         (numeric? "$111'111") => falsey
+         (numeric? "111'111$") => falsey
+         (numeric? "1.2") => truthy
+         (numeric? "111,111.2") => truthy
+         (numeric? "111'111.2") => truthy
+         (numeric? "111-111.2") => truthy
+         (numeric? "$111,111.2") => falsey
+         (numeric? "$111,111.2$") => falsey
+         (numeric? "1.2a") => falsey
+         )
 
-(fact "`infer-string-type should infer :empty for empty strings"
-      (infer-string-type "") => :empty
-      (infer-string-type " ") => :empty
-      )
+  (fact "`infer-string-type should infer non-emtpy strings"
+        (infer-string-type "1.0") => :double
+        (infer-string-type "1") => :long
+        (infer-string-type "ab") => :string
+        (infer-string-type "1ab") => :string
+        (infer-string-type "a1b") => :string
+        (infer-string-type "ab1") => :string
+        )
 
-(facts "About `map-string-type"
-       (map-string-type ["1.0" "2" "1lo2l3" ""]) => (just [:double :long :string :empty])
-       )
+  (fact "`infer-string-type should infer :empty for empty strings"
+        (infer-string-type "") => :empty
+        (infer-string-type " ") => :empty
+        )
 
-(facts "About `infer-type-candidates"
-       (let [sss [["1.0" "2" "1lo2l3" ""]
-                  ["1.0" "2.0" "1.0" " "]]]
+  (facts "About `map-string-type"
+         (map-string-type ["1.0" "2" "1lo2l3" ""]) => (just [:double :long :string :empty])
+         )
+
+  (facts "About `infer-type-candidates"
          (infer-type-candidates sss)) => (just [#{:double} #{:double :long}
-                                              #{:string :double} #{:empty}])
-       )
+                                                #{:string :double} #{:empty}])
 
-(fact "`infer-type prefer String when String detected"
-      (infer-type #{:double :long :string :empty}) => :string
-      (infer-type #{:double :string}) => :string
-      (infer-type #{:long :string}) => :string
-      (infer-type #{:empty :string}) => :string
-      )
 
-(fact "`infer-type prefers String when no type detected"
-      (infer-type #{:empty}) => :string
-      )
+  (fact "`infer-type prefer String when String detected"
+        (infer-type #{:double :long :string :empty}) => :string
+        (infer-type #{:double :string}) => :string
+        (infer-type #{:long :string}) => :string
+        (infer-type #{:empty :string}) => :string
+        )
 
-(fact "`infer-type prefers Double when mixed numeric detected"
-      (infer-type #{:double :long :empty}) => :double
-      )
+  (fact "`infer-type prefers String when no type detected"
+        (infer-type #{:empty}) => :string
+        )
+
+  (fact "`infer-type prefers Double when mixed numeric detected"
+        (infer-type #{:double :long :empty}) => :double
+        )
+
+  (facts "About `infer-cols-type"
+         (infer-cols-type sss) => [:double :double :string :string] 
+         )
+  )
 
 

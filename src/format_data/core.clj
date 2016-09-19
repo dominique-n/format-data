@@ -35,4 +35,5 @@
     (:long tss) :long
     :else :string))
 
-(defn infer-cols-type [sss])
+(defn infer-cols-type [sss]
+  (map infer-type (infer-type-candidates sss)))
