@@ -41,7 +41,7 @@
       (infere-string-type " ") => :empty
       )
 
-(future-facts "About `map-string-type"
+(facts "About `map-string-type"
        (map-string-type ["1.0" "2" "1lo2l3" ""]) => (just [:double :long :string :empty])
        )
 

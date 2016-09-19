@@ -18,7 +18,8 @@
     (re-seq #"^((([\d,]+.)|([\d']+.))\d+)$" s) :double
     :else :long))
 
-(defn map-string-type [ss])
+(defn map-string-type [ss]
+  (map infere-string-type ss))
 
 (defn infere-type-candidates [sss])
 
