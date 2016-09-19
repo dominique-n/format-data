@@ -3,7 +3,11 @@
            [lazy-files.core :refer [lazy-read lazy-write]]))
 
 
-(defn get-string-type [s])
+(defn numeric? [s]
+  (not (re-seq #"[^\d,.'-]+" s)))
+
+(defn get-string-type [s]
+  )
 
 (defn map-string-type [ss])
 
