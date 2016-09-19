@@ -28,6 +28,11 @@
             (repeatedly n (fn [] #{}))
             (map map-string-type sss) )))
 
-(defn decide-type [ss])
+(defn decide-type [tss]
+  (cond
+    (:string tss) :string
+    (:double tss) :double
+    (:long tss) :long
+    :else :string))
 
 (defn infer-cols-type [sss])
