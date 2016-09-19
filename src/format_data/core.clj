@@ -6,8 +6,11 @@
 (defn numeric? [s]
   (not (re-seq #"[^\d,.'-]+" s)))
 
-(defn get-string-type [s]
-  )
+(defn infere-string-type [s]
+  (cond 
+    (not (numeric? s)) :string
+    (re-seq #"^((([\d,]+.)|([\d']+.))\d+)$" s) :double
+    :else :long))
 
 (defn map-string-type [ss])
 

@@ -4,6 +4,7 @@
 
 
 (facts "About `numeric?"
+       ;(numeric? "") => falsey
        (numeric? "1") => truthy
        (numeric? "111,111") => truthy
        (numeric? "111'111") => truthy
@@ -19,18 +20,18 @@
        (numeric? "1.2a") => falsey
        )
 
-(future-fact "`get-string-type should infere non-emtpy strings"
-       (get-string-type "1.0") => :double
-       (get-string-type "1") => :long
-       (get-string-type "ab") => :string
-       (get-string-type "1ab") => :string
-       (get-string-type "a1b") => :string
-       (get-string-type "ab1") => :string
+(fact "`infere-string-type should infere non-emtpy strings"
+       (infere-string-type "1.0") => :double
+       (infere-string-type "1") => :long
+       (infere-string-type "ab") => :string
+       (infere-string-type "1ab") => :string
+       (infere-string-type "a1b") => :string
+       (infere-string-type "ab1") => :string
        )
 
-(future-fact "`get-string-type should infere :empty for empty strings"
-      (get-string-type "") => :empty
-      (get-string-type " ") => :empty
+(future-fact "`infere-string-type should infere :empty for empty strings"
+      (infere-string-type "") => :empty
+      (infere-string-type " ") => :empty
       )
 
 (future-facts "About `map-string-type"
