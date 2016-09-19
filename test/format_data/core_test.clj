@@ -68,6 +68,10 @@
         (infer-type #{:double :long :empty}) => :double
         )
 
+  (fact "`infer-type should pick double when mixed with empty"
+        (infer-type #{:long :empty}) => :long
+        )
+
   (facts "About `infer-cols-type"
          (infer-cols-type sss) => [:double :double :string :string] 
          )
