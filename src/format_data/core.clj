@@ -1,6 +1,5 @@
 (ns format-data.core
-  (require [format-data.helpers :as hlp]
-           [lazy-files.core :refer [lazy-read lazy-write]]))
+  (require [format-data.helpers :as hlp]))
 
 
 (defn empty? [coll]
