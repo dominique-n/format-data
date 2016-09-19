@@ -4,7 +4,8 @@
 
 
 (facts "About `numeric?"
-       ;(numeric? "") => falsey
+       (numeric? "") => falsey
+       (numeric? " ") => falsey
        (numeric? "1") => truthy
        (numeric? "111,111") => truthy
        (numeric? "111'111") => truthy

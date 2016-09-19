@@ -4,7 +4,8 @@
 
 
 (defn numeric? [s]
-  (not (re-seq #"[^\d,.'-]+" s)))
+  (if (re-seq #"^\s*$" s) false
+    (not (re-seq #"[^\d,.'-]+" s))))
 
 (defn infere-string-type [s]
   (cond 

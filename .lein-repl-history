@@ -3,3 +3,5 @@
 (doc pr)
 (type 1.0)
 (doc read-string)
+(empty? "")
+(empty? " ")
