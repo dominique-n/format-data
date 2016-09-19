@@ -28,7 +28,7 @@
             (repeatedly n (fn [] #{}))
             (map map-string-type sss) )))
 
-(defn decide-type [tss]
+(defn infer-type [tss]
   (cond
     (:string tss) :string
     (:double tss) :double

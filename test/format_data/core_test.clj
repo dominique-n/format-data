@@ -52,17 +52,19 @@
                                               #{:string :double} #{:empty}])
        )
 
-(fact "`decide-type prefer String when String detected"
-      (decide-type #{:double :long :string :empty}) => :string
-      (decide-type #{:double :string}) => :string
-      (decide-type #{:long :string}) => :string
-      (decide-type #{:empty :string}) => :string
+(fact "`infer-type prefer String when String detected"
+      (infer-type #{:double :long :string :empty}) => :string
+      (infer-type #{:double :string}) => :string
+      (infer-type #{:long :string}) => :string
+      (infer-type #{:empty :string}) => :string
       )
 
-(fact "`decide-type prefers String when no type detected"
-      (decide-type #{:empty}) => :string
+(fact "`infer-type prefers String when no type detected"
+      (infer-type #{:empty}) => :string
       )
 
-(fact "`decide-type prefers Double when mixed numeric detected"
-      (decide-type #{:double :long :empty}) => :double
+(fact "`infer-type prefers Double when mixed numeric detected"
+      (infer-type #{:double :long :empty}) => :double
       )
+
+
