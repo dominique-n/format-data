@@ -3,6 +3,12 @@
             [format-data.core :refer :all]))
 
 
+(facts "About `empty?"
+       (empty? "") => truthy
+       (empty? " ") => truthy
+       (empty? "1") => falsey
+       )
+
 (facts "About `numeric?"
        (numeric? "") => falsey
        (numeric? " ") => falsey
@@ -30,7 +36,7 @@
        (infere-string-type "ab1") => :string
        )
 
-(future-fact "`infere-string-type should infere :empty for empty strings"
+(fact "`infere-string-type should infere :empty for empty strings"
       (infere-string-type "") => :empty
       (infere-string-type " ") => :empty
       )
