@@ -7,5 +7,4 @@
 
 (defn numeric? [s]
   (if (empty? s) false
-    (not (re-seq #"[^\d,.'-]+" s))))
-
+    (not (re-seq #"[^-\d,\.'eE]" s))))
