@@ -12,3 +12,4 @@
 (empty set)
 (hash-map 0 1)
 (hash-map)
+(repeatedly 4 hash-map)

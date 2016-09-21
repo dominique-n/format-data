@@ -23,10 +23,10 @@
 (defn infer-type-candidates [sss]
   (let [n (count (first sss))
         conj-types (fn [acc types] 
-                     (map #(assoc %1 %2 (inc (get %1 %2 0))) 
+                     (mapv #(assoc %1 %2 (inc (get %1 %2 0))) 
                           acc types))]
     (reduce conj-types 
-            (repeatedly n hash-map)
+            (vec (repeatedly n hash-map))
             (map map-string-type sss) )))
 
 (defn infer-type [tss]
