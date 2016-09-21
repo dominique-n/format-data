@@ -2,18 +2,10 @@
   (require [format-data.helpers :as hlp]))
 
 
-(defn empty? [coll]
-  (if (string? coll) (re-seq #"^\s*$" coll)
-    (clojure.core/empty? coll)))
-
-(defn numeric? [s]
-  (if (empty? s) false
-    (not (re-seq #"[^\d,.'-]+" s))))
-
 (defn infer-string-type [s]
   (cond 
-    (empty? s) :empty
-    (not (numeric? s)) :string
+    (hlp/empty? s) :empty
+    (not (hlp/numeric? s)) :string
     (re-seq #"^((([\d,]+\.)|([\d']+\.))\d+)$" s) :double
     :else :long))
 
