@@ -39,24 +39,25 @@
                                                 {:string 1 :double 1} {:empty 2}])
 
 
-  (fact "`infer-type prefer String when String detected"
-        (infer-type #{:double :long :string :empty}) => :string
-        (infer-type #{:double :string}) => :string
-        (infer-type #{:long :string}) => :string
-        (infer-type #{:empty :string}) => :string
-        )
+  (facts :infer-type 
+         (fact "`infer-type prefer String when String detected"
+               (infer-type #{:double :long :string :empty}) => :string
+               (infer-type #{:double :string}) => :string
+               (infer-type #{:long :string}) => :string
+               (infer-type #{:empty :string}) => :string
+               )
 
-  (fact "`infer-type prefers String when no type detected"
-        (infer-type #{:empty}) => :string
-        )
+         (fact "`infer-type prefers String when no type detected"
+               (infer-type #{:empty}) => :string
+               )
 
-  (fact "`infer-type prefers Double when mixed numeric detected"
-        (infer-type #{:double :long :empty}) => :double
-        )
+         (fact "`infer-type prefers Double when mixed numeric detected"
+               (infer-type #{:double :long :empty}) => :double
+               )
 
-  (fact "`infer-type should pick double when mixed with empty"
-        (infer-type #{:long :empty}) => :long
-        )
+         (fact "`infer-type should pick double when mixed with empty"
+               (infer-type #{:long :empty}) => :long
+        ))
 
   (facts "About `infer-cols-type"
          (infer-cols-type sss) => [:double :double :string :string] 

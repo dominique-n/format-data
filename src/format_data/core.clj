@@ -21,6 +21,9 @@
             (vec (repeatedly n hash-map))
             (map map-string-type sss) )))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;integration
+
 (defn infer-type [tss]
   (cond
     (:string tss) :string
