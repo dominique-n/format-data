@@ -6,31 +6,32 @@
 (let [sss [["1.0" "2" "1lo2l3" ""]
            ["1.0" "2.0" "1.0" " "]]]
 
-  (fact "`infer-string-type should infer non-emtpy strings"
-        (infer-string-type "1") => :long
-        (infer-string-type "1-1-1") => :long
-        (infer-string-type "1.1.1") => :long
-        (infer-string-type "1-1.1") => :long
-        (infer-string-type "1,1,1") => :long
-        (infer-string-type "111-1111.0") => :long
+  (facts :infer-string-type
+         (fact "`infer-string-type should infer non-emtpy strings"
+               (infer-string-type "1") => :long
+               (infer-string-type "1-1-1") => :long
+               (infer-string-type "1.1.1") => :long
+               (infer-string-type "1-1.1") => :long
+               (infer-string-type "1,1,1") => :long
+               (infer-string-type "111-1111.0") => :long
 
-        (infer-string-type "1.0") => :double
-        (infer-string-type "111,1111.0") => :double
-        (infer-string-type "111'1111.0") => :double
+               (infer-string-type "1.0") => :double
+               (infer-string-type "111,1111.0") => :double
+               (infer-string-type "111'1111.0") => :double
 
-        (infer-string-type "ab") => :string
-        (infer-string-type "1ab") => :string
-        (infer-string-type "a1b") => :string
-        (infer-string-type "ab1") => :string
-        )
+               (infer-string-type "ab") => :string
+               (infer-string-type "1ab") => :string
+               (infer-string-type "a1b") => :string
+               (infer-string-type "ab1") => :string
+               )
 
-  (fact "`infer-string-type should infer :empty for empty strings"
-        (infer-string-type "") => :empty
-        (infer-string-type " ") => :empty
-        )
+         (fact "`infer-string-type should infer :empty for empty strings"
+               (infer-string-type "") => :empty
+               (infer-string-type " ") => :empty
+               ))
 
   (facts "About `map-string-type"
-         (map-string-type ["1.0" "2" "1lo2l3" ""]) => (just [:double :long :string :empty])
+         (map-string-type (first sss)) => (just [:double :long :string :empty])
          )
 
   (facts "About `infer-type-candidates"
