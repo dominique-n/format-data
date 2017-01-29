@@ -9,15 +9,14 @@
             (clojure.string/replace s #"\W" ""))))
 
 (defn parse-int [s]
-  (assert (string? s) "expect a string")
   (try (Integer. s) (catch NumberFormatException e)))
 
 (defn parse-double [s]
-  (assert (string? s) "expect a string")
   (and (not (parse-int s)) 
     (try (Double. s) (catch NumberFormatException e))))
 
 (defn infer-string-type [s]
+  (assert (string? s) "expect a string")
   (let [s (clojure.string/replace s #"\s+" "")]
     (cond 
       (parse-int s) :long
