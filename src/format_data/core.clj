@@ -3,14 +3,19 @@
 
 
 (defn infer-string-type [s]
-  (cond 
-    (hlp/empty? s) :empty
-    (not (hlp/numeric? s)) :string
-    (re-seq #"^((([\d,]+\.)|([\d']+\.))\d+)$" s) :double
-    :else :long))
+  (let [s (clojure.string/replace s #"\s+" "")]
+    (cond 
+      (empty? s) :empty
+      (not (hlp/numeric? s)) :string
+      (re-seq #"^((([\d,]+\.)|([\d']+\.))\d+)$" s) :double
+      :else :long)))
 
 (defn map-string-type [ss]
   (map infer-string-type ss))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;integration
 
 (defn infer-type-candidates [sss]
   (let [n (count (first sss))
@@ -20,9 +25,6 @@
     (reduce conj-types 
             (vec (repeatedly n hash-map))
             (map map-string-type sss) )))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;integration
 
 (defn infer-type [tss]
   (cond

@@ -3,12 +3,6 @@
            [format-data.helpers :refer :all]))
 
 
-  (facts "About `empty?"
-         (empty? "") => truthy
-         (empty? " ") => truthy
-         (empty? "1") => falsey
-         )
-
   (facts "About `numeric?"
          (numeric? "") => falsey
          (numeric? " ") => falsey
