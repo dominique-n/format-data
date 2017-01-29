@@ -15,7 +15,7 @@
 
 (facts "About `parse-double"
        (parse-double "1.1") => 1.1
-       (parse-double "1") => 1.0
+       (parse-double "1") => falsey
        (parse-double "") => falsey
        (parse-double nil) => (throws AssertionError)
        )

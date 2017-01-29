@@ -14,18 +14,16 @@
 
 (defn parse-double [s]
   (assert (string? s) "expect a string")
-  (try (Double. s) (catch NumberFormatException e)))
+  (and (not (parse-int s)) 
+    (try (Double. s) (catch NumberFormatException e))))
 
 (defn infer-string-type [s]
   (println "entered s" s)
-  (let [s (clojure.string/replace s #"\s+" "")
-        s-read (try (read-string s) 
-               (catch NumberFormatException e))]
+  (let [s (clojure.string/replace s #"\s+" "")]
     (println "current s" s)
-    (println "current s-read" s-read)
     (cond 
-      (float? s-read) :double
-      (integer? s-read) :long
+      (parse-int s) :long
+      (parse-double s) :double
       (noisy-numeric? s) :noisy-numeric
       (empty? s) :empty
       :else :string)))
