@@ -6,6 +6,36 @@
 (let [sss [["1.0" "2" "1lo2l3" ""]
            ["1.0" "2.0" "1.0" " "]]]
 
+  (facts "About `noisy-numeric?"
+         (noisy-numeric? "") => falsey
+         (noisy-numeric? " ") => falsey
+         (noisy-numeric? "1") => truthy
+         (noisy-numeric? "111,111") => truthy
+         (noisy-numeric? "111'111") => truthy
+         (noisy-numeric? "111-111") => truthy
+         (noisy-numeric? "$111'111") => truthy
+         (noisy-numeric? "111'111$") => truthy
+         (noisy-numeric? "1.2") => truthy
+         (noisy-numeric? "111,111.2") => truthy
+         (noisy-numeric? "111'111.2") => truthy
+         (noisy-numeric? "111-111.2") => truthy
+         (noisy-numeric? "$111,111.2") => truthy
+         (noisy-numeric? "$111,111.2$") => truthy
+         (noisy-numeric? "1.2a") => falsey
+         (noisy-numeric? "1.2a7") => falsey
+
+         (noisy-numeric? "1.2e7") => truthy
+         (noisy-numeric? "1.2e-7") => truthy
+         (noisy-numeric? "111.222e77") => truthy
+         (noisy-numeric? "111.222e-77") => truthy
+
+         (noisy-numeric? "1.2E7") => truthy
+         (noisy-numeric? "1.2E-7") => truthy
+         (noisy-numeric? "111.222E77") => truthy
+         (noisy-numeric? "111.222E-77") => truthy
+         )
+
+
   (facts :infer-string-type
          (fact "`infer-string-type should infer non-emtpy strings"
                (infer-string-type "1") => :long
@@ -57,7 +87,7 @@
 
          (fact "`infer-type should pick double when mixed with empty"
                (infer-type #{:long :empty}) => :long
-        ))
+               ))
 
   (facts "About `infer-cols-type"
          (infer-cols-type sss) => [:double :double :string :string] 

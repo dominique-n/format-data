@@ -2,11 +2,17 @@
   (require [format-data.helpers :as hlp]))
 
 
+(defn noisy-numeric? [s]
+  "check whether digits are polluted by non-language characters"
+  (seq 
+    (re-seq #"^\d+(e\d|E\d){0,1}\d*$"
+            (clojure.string/replace s #"\W" ""))))
+
 (defn infer-string-type [s]
   (let [s (clojure.string/replace s #"\s+" "")]
     (cond 
       (empty? s) :empty
-      (not (hlp/numeric? s)) :string
+      (not (noisy-numeric? s)) :string
       (re-seq #"^((([\d,]+\.)|([\d']+\.))\d+)$" s) :double
       :else :long)))
 
