@@ -25,21 +25,21 @@
       (empty? s) :empty
       :else :string)))
 
-(defn map-string-type [ss]
+(defn infer-row-types [ss]
   (map infer-string-type ss))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;integration
 
-(defn infer-type-candidates [sss]
+(defn infer-types-candidates [sss]
   (let [n (count (first sss))
         conj-types (fn [acc types] 
                      (mapv #(assoc %1 %2 (inc (get %1 %2 0))) 
                           acc types))]
     (reduce conj-types 
             (vec (repeatedly n hash-map))
-            (map map-string-type sss) )))
+            (map infer-row-types sss) )))
 
 (defn infer-type [tss]
   (cond
@@ -50,4 +50,4 @@
 
 (defn infer-cols-type [sss]
   (map #(-> % keys set infer-type)
-       (infer-type-candidates sss)))
+       (infer-types-candidates sss)))

@@ -73,8 +73,9 @@
              (infer-string-type " ") => :empty
              ))
 
-  (facts "About `map-string-type"
-         (map-string-type (first sss)) => (just [:double :long :string :empty])
+  (facts "About `infer-row-types"
+         (infer-row-types (first sss)) => (just [:double :long :string :empty])
+         (infer-row-types (last sss)) => (just [:double :long :noisy-numeric :empty])
          )
 
   (facts "About `infer-type-candidates"
