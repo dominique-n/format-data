@@ -6,6 +6,21 @@
 (let [sss [["1.0" "2" "1lo2l3" ""]
            ["1.0" "2.0" "1.0" " "]]]
 
+(facts "About `parse-int"
+       (parse-int "11") => 11
+       (parse-int "1.2") => falsey
+       (parse-int "") => falsey
+       (parse-int nil) => (throws AssertionError)
+       )
+
+(facts "About `parse-double"
+       (parse-double "1.1") => 1.1
+       (parse-double "1") => 1.0
+       (parse-double "") => falsey
+       (parse-double nil) => (throws AssertionError)
+       )
+
+
   (facts "About `noisy-numeric?"
          (noisy-numeric? "") => falsey
          (noisy-numeric? " ") => falsey
@@ -39,15 +54,15 @@
   (facts :infer-string-type
          (fact "`infer-string-type should infer non-emtpy strings"
                (infer-string-type "1") => :long
-               (infer-string-type "1-1-1") => :long
-               (infer-string-type "1.1.1") => :long
-               (infer-string-type "1-1.1") => :long
-               (infer-string-type "1,1,1") => :long
-               (infer-string-type "111-1111.0") => :long
+               (infer-string-type "1-1-1") => :noisy-numeric
+               (infer-string-type "1.1.1") => :noisy-numeric
+               (infer-string-type "1-1.1") => :noisy-numeric
+               (infer-string-type "1,1,1") => :noisy-numeric
+               (infer-string-type "111-1111.0") => :noisy-numeric
 
                (infer-string-type "1.0") => :double
-               (infer-string-type "111,1111.0") => :double
-               (infer-string-type "111'1111.0") => :double
+               (infer-string-type "111,1111.0") => :noisy-numeric
+               (infer-string-type "111'1111.0") => :noisy-numeric
 
                (infer-string-type "ab") => :string
                (infer-string-type "1ab") => :string

@@ -8,13 +8,27 @@
     (re-seq #"^\d+(e\d|E\d){0,1}\d*$"
             (clojure.string/replace s #"\W" ""))))
 
+(defn parse-int [s]
+  (assert (string? s) "expect a string")
+  (try (Integer. s) (catch NumberFormatException e)))
+
+(defn parse-double [s]
+  (assert (string? s) "expect a string")
+  (try (Double. s) (catch NumberFormatException e)))
+
 (defn infer-string-type [s]
-  (let [s (clojure.string/replace s #"\s+" "")]
+  (println "entered s" s)
+  (let [s (clojure.string/replace s #"\s+" "")
+        s-read (try (read-string s) 
+               (catch NumberFormatException e))]
+    (println "current s" s)
+    (println "current s-read" s-read)
     (cond 
+      (float? s-read) :double
+      (integer? s-read) :long
+      (noisy-numeric? s) :noisy-numeric
       (empty? s) :empty
-      (not (noisy-numeric? s)) :string
-      (re-seq #"^((([\d,]+\.)|([\d']+\.))\d+)$" s) :double
-      :else :long)))
+      :else :string)))
 
 (defn map-string-type [ss]
   (map infer-string-type ss))
