@@ -18,9 +18,7 @@
     (try (Double. s) (catch NumberFormatException e))))
 
 (defn infer-string-type [s]
-  (println "entered s" s)
   (let [s (clojure.string/replace s #"\s+" "")]
-    (println "current s" s)
     (cond 
       (parse-int s) :long
       (parse-double s) :double
