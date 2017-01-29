@@ -41,13 +41,14 @@
             (vec (repeatedly n hash-map))
             (map infer-row-types sss) )))
 
-(defn infer-type [tss]
+(defn infer-types [tss]
   (cond
     (:string tss) :string
+    (:noisy-numeric tss) :string
     (:double tss) :double
     (:long tss) :long
     :else :string))
 
 (defn infer-cols-type [sss]
-  (map #(-> % keys set infer-type)
+  (map #(-> % keys set infer-types)
        (infer-types-candidates sss)))

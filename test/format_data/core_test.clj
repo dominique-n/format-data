@@ -78,31 +78,40 @@
          (infer-row-types (last sss)) => (just [:double :long :noisy-numeric :empty])
          )
 
-  (facts "About `infer-type-candidates"
-         (infer-type-candidates sss)) => (just [{:double 3}
+  (facts "About `infer-types-candidates"
+         (infer-types-candidates sss)) => (just [{:double 3}
                                                 {:double 2 :long 1}
                                                 {:string 1 :double 1 :noisy-numeric 1}
                                                 {:empty 2}])
 
-
-  (facts :infer-type 
-         (fact "`infer-type prefer String when String detected"
-               (infer-type #{:double :long :string :empty}) => :string
-               (infer-type #{:double :string}) => :string
-               (infer-type #{:long :string}) => :string
-               (infer-type #{:empty :string}) => :string
+  (facts :infer-types 
+         (fact "`infer-types prefer String when String detected"
+               (infer-types #{:double :long :string :empty}) => :string
+               (infer-types #{:double :string}) => :string
+               (infer-types #{:long :string}) => :string
+               (infer-types #{:empty :string}) => :string
+               (infer-types #{:noisy-numeric :string}) => :string
                )
 
-         (fact "`infer-type prefers String when no type detected"
-               (infer-type #{:empty}) => :string
+         (fact "`infer-types prefers String when no type detected"
+               (infer-types #{:empty}) => :string
                )
 
-         (fact "`infer-type prefers Double when mixed numeric detected"
-               (infer-type #{:double :long :empty}) => :double
+         (fact "`infer-types prefers String whenever noisy numbers detected"
+               (infer-types #{:noisy-numeric}) => :string
+               (infer-types #{:noisy-numeric :empty}) => :string
+               (infer-types #{:noisy-numeric :double }) => :string
+               (infer-types #{:noisy-numeric :long }) => :string
+               (infer-types #{:noisy-numeric :double :long}) => :string
+               (infer-types #{:noisy-numeric :double :long :empty}) => :string
                )
 
-         (fact "`infer-type should pick double when mixed with empty"
-               (infer-type #{:long :empty}) => :long
+         (fact "`infer-types prefers Double when mixed numeric detected"
+               (infer-types #{:double :long :empty}) => :double
+               )
+
+         (fact "`infer-types should pick double when mixed with empty"
+               (infer-types #{:long :empty}) => :long
                ))
 
   (facts "About `infer-cols-type"
