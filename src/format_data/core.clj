@@ -53,6 +53,8 @@
     (:long tss) :long
     :else :string))
 
-(defn infer-cols-type [sss]
+(defn infer-cols-type 
+  ([sss] (infer-cols-type 1 sss))
+  ([prop sss]
   (map #(-> % keys set infer-types)
-       (infer-types-candidates sss)))
+       (infer-types-candidates prop sss))))

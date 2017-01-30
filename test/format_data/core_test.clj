@@ -125,6 +125,7 @@
 
   (facts "About `infer-cols-type"
          (infer-cols-type sss) => [:double :double :string :string] 
+         (infer-cols-type 1 sss) => [:double :double :string :string] 
          )
   )
 
