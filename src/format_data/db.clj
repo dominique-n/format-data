@@ -5,10 +5,10 @@
   )
 
 
-(def db-spec
+(defn make-db-spec [db_path]
   {:classname   "org.sqlite.JDBC"
    :subprotocol  "sqlite"
-   :subname     "dev-resources/database.db"
+   :subname     db_path
    :init-pool-size 4
    :max-pool-size 20
    :partitions 2})
@@ -31,33 +31,29 @@
                  (.setIdleMaxAgeInMinutes  (or idle-time 60)))]
     {:datasource cpds}))
 
-(def pooled-db (pool-db db-spec))
+(def type-maps
+  (hash-map
+    :long :integer
+    :double :float
+    :string :text))
 
-;(def pooled-db (delay (pool-db db-spec)))
-;(defn db-connection [] @pooled-db)
+(defn into-hashmap [ks vs]
+  (into {} (map #(vector %1 %2) ks vs)))
 
+(defn make-headers [colnames types]
+  (assert (= (count colnames) (count types)) "colnames count should equal types'")
+  (cons [:_primary_id :integer "PRIMARY KEY AUTOINCREMENT"]
+    (map #(vector %1 (get type-maps %2)) colnames types)))
 
-(jdbc/db-do-commands pooled-db false (ddl/drop-table :blog_posts))
-(jdbc/db-do-commands pooled-db false
-                     (ddl/create-table
-                       :blog_posts
-                       [:id :integer "PRIMARY KEY AUTOINCREMENT"]
-                       [:title  "varchar(255)"  "NOT NULL"]
-                       [:body :text]))
-;; ->  (0)
-
-
-(jdbc/insert! pooled-db
-                    :blog_posts 
-                    [:title :body]
-                    ["title0" "good news"] ["title1" "good news"])
-(jdbc/insert! pooled-db
-              :blog_posts
-              {:title  "My first post!" :body  "This is going to be good!"}
-              {:title  "My second post!" :body  "This is going to be really good!"})
-;; -> ({:body "This is going to be good!", :title "My first post!", :id 1})
-
-(jdbc/query pooled-db
-            (sql/select * :blog_posts  (sql/where {:title  "My first post!"})))
-(jdbc/query pooled-db (sql/select * :blog_posts ))
-;; -> ({:body "This is going to be good!", :title "My first post!", :id 1}))
+(defn to-sql [db-name table-name colnames types rows]
+  (assert (= (count colnames) (-> rows first count)) "headers' dim should match row's")
+  (let [pooled-db (pool-db (make-db-spec db-name))
+        headers (make-headers colnames types)
+        tag-row (partial into-hashmap colnames)
+        rows* (map #(tag-row %) rows)
+        create-table #(jdbc/db-do-commands pooled-db false 
+                                           (apply (partial ddl/create-table table-name) %))
+        insert! (partial jdbc/insert! pooled-db table-name)]
+    (create-table headers)
+    (doseq [row rows*]
+      (insert! row))))

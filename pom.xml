@@ -9,7 +9,7 @@
   <scm>
     <connection>scm:git:git://github.com/dominique-n/format-data.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/dominique-n/format-data.git</developerConnection>
-    <tag>67f135571789833d893747825409029d9880a655
+    <tag>adc1fb701c5a8a068e2d1491a5912aa80209dbce
 </tag>
     <url>https://github.com/dominique-n/format-data</url>
   </scm>
@@ -57,6 +57,31 @@
       <groupId>org.clojure</groupId>
       <artifactId>clojure</artifactId>
       <version>1.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>java.jdbc</artifactId>
+      <version>0.7.0-alpha1</version>
+    </dependency>
+    <dependency>
+      <groupId>java-jdbc</groupId>
+      <artifactId>dsl</artifactId>
+      <version>0.1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.16.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>1.7.22</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp</artifactId>
+      <version>0.8.0.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>midje</groupId>
