@@ -7,6 +7,8 @@
   (seq 
     (re-seq #"^\d+(e\d|E\d){0,1}\d*$"
             (clojure.string/replace s #"\W" ""))))
+(defn prune [prop colls]
+  (filter (fn [_] (< (rand) prop)) colls))
 
 (defn parse-int [s]
   (try (Integer. s) (catch NumberFormatException e)))
@@ -32,14 +34,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;integration
 
-(defn infer-types-candidates [sss]
-  (let [n (count (first sss))
-        conj-types (fn [acc types] 
-                     (mapv #(assoc %1 %2 (inc (get %1 %2 0))) 
-                          acc types))]
-    (reduce conj-types 
-            (vec (repeatedly n hash-map))
-            (map infer-row-types sss) )))
+(defn infer-types-candidates 
+  ([sss] (infer-types-candidates 1 sss))
+  ([prop sss] (let [sss (prune prop sss)
+                    n (count (first sss))
+               conj-types (fn [acc types] 
+                            (mapv #(assoc %1 %2 (inc (get %1 %2 0))) 
+                                  acc types))]
+           (reduce conj-types 
+                   (vec (repeatedly n hash-map))
+                   (map infer-row-types sss) ))))
 
 (defn infer-types [tss]
   (cond

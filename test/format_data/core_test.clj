@@ -7,6 +7,10 @@
            ["1.0" "2.0" "1.0" " "]
            ["1.0" "2" "1,111$" ""]]]
 
+  (facts "About `prune"
+         (prune 0.1 sss) => #(< (count %) (count sss))
+         (prune 1 sss) => #(= (count %) (count sss))
+         )
 (facts "About `parse-int"
        (parse-int "11") => 11
        (parse-int "1.2") => falsey
@@ -79,10 +83,15 @@
          )
 
   (facts "About `infer-types-candidates"
-         (infer-types-candidates sss)) => (just [{:double 3}
-                                                {:double 2 :long 1}
+         (infer-types-candidates sss) => (just [{:double 3}
+                                                {:double 1 :long 2}
                                                 {:string 1 :double 1 :noisy-numeric 1}
-                                                {:empty 2}])
+                                                {:empty 3}])
+         (infer-types-candidates 1 sss) => (just [{:double 3}
+                                                {:double 1 :long 2}
+                                                {:string 1 :double 1 :noisy-numeric 1}
+                                                {:empty 3}])
+         )
 
   (facts :infer-types 
          (fact "`infer-types prefer String when String detected"

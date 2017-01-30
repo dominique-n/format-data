@@ -9,7 +9,7 @@
   <scm>
     <connection>scm:git:git://github.com/dominique-n/format-data.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/dominique-n/format-data.git</developerConnection>
-    <tag>adc1fb701c5a8a068e2d1491a5912aa80209dbce
+    <tag>45c200f2bf85ad0d82a99ce99f8565269ebefed5
 </tag>
     <url>https://github.com/dominique-n/format-data</url>
   </scm>
